@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { DEFAULT_FIELD_CONFIGS } from './calc.js';
 
 export function getFieldConfigs(state, scope) {

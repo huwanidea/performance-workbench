@@ -1,4 +1,3 @@
-/* eslint-disable */
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
 
 export const DOC_TEMPLATE_CATEGORIES = [

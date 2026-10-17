@@ -1,13 +1,19 @@
 node_modules/
+out/
 work/
 outputs/
-out/
 auto-imports.d.ts
+*.local
 
-*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
 .env
 .env.*
 !.env.example
 
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/

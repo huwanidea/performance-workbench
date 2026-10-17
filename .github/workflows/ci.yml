@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Unit and integration tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify Excel service starts
+        run: |
+          npm run build
+          PORT=4180 node server.mjs &
+          for i in $(seq 1 30); do
+            if curl -s -o /dev/null -w "%{http_code}" -X POST http://127.0.0.1:4180/api/import --data-binary "" | grep -q "400\|200"; then
+              echo "Excel service is up"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Excel service failed to start"
+          exit 1
